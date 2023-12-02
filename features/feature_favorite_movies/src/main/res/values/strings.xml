@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="favorite_movies_text_favorite_movies">Favorite Movies</string>
+  <string name="favorite_movies_text_no_data">no data available</string>
+</resources>

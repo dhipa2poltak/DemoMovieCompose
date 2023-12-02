@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="search_movie_text_search_movie">Search Movie</string>
+  <string name="search_movie_text_search_movie_by_title">search movie by title</string>
+  <string name="search_movie_text_search">Search</string>
+  <string name="search_movie_text_no_data">no data available</string>
+</resources>

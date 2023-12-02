@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_text_movie_id_required">movieId parameter wasn\'t found. Please make sure it\'s set!</string>
+  <string name="app_text_is_for_result_required">isForResult parameter wasn\'t found. Please make sure it\'s set!</string>
+  <string name="app_text_ok">OK</string>
+</resources>
