@@ -41,7 +41,6 @@ class MainActivity : ComponentActivity() {
       val coroutineScope = rememberCoroutineScope()
       val drawerState: DrawerState = rememberDrawerState(initialValue = Closed)
       val navBackStackEntry by navController.currentBackStackEntryAsState()
-      val isOnBoarded = remember { mutableStateOf(false) }
 
       val appWindowTitle = "${stringResource(id = R.string.app_name)}${stringResource(id = R.string.running_mode)}"
 
@@ -52,7 +51,7 @@ class MainActivity : ComponentActivity() {
       }
 
       DemoMovieComposeTheme {
-        MainNavigation(navigationService = navigationService, navController = navController, isOnBoarded = isOnBoarded)
+        MainNavigation(navigationService = navigationService, navController = navController)
 
         if (showDialog.value) {
           val theTitle = "${getString(R.string.app_name)}${getString(R.string.running_mode)}"
@@ -67,7 +66,7 @@ class MainActivity : ComponentActivity() {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
           ModalNavigationDrawer(
             drawerState = drawerState,
-            gesturesEnabled = isOnBoarded.value,
+            gesturesEnabled = true,
             drawerContent = {
               AppDrawerContent(
                 currentScreen = navBackStackEntry?.destination?.route ?: "",

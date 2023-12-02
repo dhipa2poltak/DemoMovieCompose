@@ -2,7 +2,6 @@ package com.dpfht.demomoviecompose
 
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +25,7 @@ import com.dpfht.demomoviecompose.framework.navigation.Screen.MainBaseRoute
 import com.dpfht.demomoviecompose.framework.navigation.Screen.None
 
 @Composable
-fun MainNavigation(navigationService: NavigationService, navController: NavHostController, isOnBoarded: MutableState<Boolean>) {
+fun MainNavigation(navigationService: NavigationService, navController: NavHostController) {
   var showSheet by remember { mutableStateOf(false) }
   var errorMessage by remember { mutableStateOf("") }
 
@@ -67,7 +66,6 @@ fun MainNavigation(navigationService: NavigationService, navController: NavHostC
 
           launchSingleTop = true
           restoreState = true
-          isOnBoarded.value = true
         }
       }
       is Screen.Error -> {
