@@ -20,14 +20,13 @@ import com.dpfht.demomoviecompose.feature_favorite_movies.FavoriteMoviesScreen
 import com.dpfht.demomoviecompose.feature_movie_details.MovieDetailsScreen
 import com.dpfht.demomoviecompose.feature_popular_movies.PopularMoviesScreen
 import com.dpfht.demomoviecompose.feature_search_movie.SearchMovieScreen
-import com.dpfht.demomoviecompose.feature_splash.SplashScreen
 import com.dpfht.demomoviecompose.framework.navigation.NavigationService
 import com.dpfht.demomoviecompose.framework.navigation.Screen
 import com.dpfht.demomoviecompose.framework.navigation.Screen.MainBaseRoute
 import com.dpfht.demomoviecompose.framework.navigation.Screen.None
 
 @Composable
-fun AppNavigation(navigationService: NavigationService, navController: NavHostController, isOnBoarded: MutableState<Boolean>) {
+fun MainNavigation(navigationService: NavigationService, navController: NavHostController, isOnBoarded: MutableState<Boolean>) {
   var showSheet by remember { mutableStateOf(false) }
   var errorMessage by remember { mutableStateOf("") }
 
@@ -109,11 +108,7 @@ fun AppNavigation(navigationService: NavigationService, navController: NavHostCo
 }
 
 fun NavGraphBuilder.mainGraph(appWindowTitle: String, drawerState: DrawerState, onClickAboutMenuItem: () -> Unit) {
-  navigation(route = MainBaseRoute.route, startDestination = Screen.Splash.route) {
-    composable(route = Screen.Splash.route) {
-      SplashScreen()
-    }
-
+  navigation(route = MainBaseRoute.route, startDestination = Screen.PopularMovies.route) {
     composable(route = Screen.PopularMovies.route) {
       PopularMoviesScreen(drawerState = drawerState, screenTitle = appWindowTitle, onClickAboutMenuItem = onClickAboutMenuItem)
     }

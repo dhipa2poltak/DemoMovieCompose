@@ -27,7 +27,7 @@ class SplashViewModel @Inject constructor(
   private fun start() {
     viewModelScope.launch {
       delay(Constants.DELAY_SPLASH)
-      navigationService.navigate(Screen.PopularMovies)
+      navigationService.navigate(Screen.Home)
     }
   }
 }

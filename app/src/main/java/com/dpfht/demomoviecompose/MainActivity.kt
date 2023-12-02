@@ -51,9 +51,9 @@ class MainActivity : ComponentActivity() {
         showDialog.value = true
       }
 
-      AppNavigation(navigationService = navigationService, navController = navController, isOnBoarded = isOnBoarded)
-
       DemoMovieComposeTheme {
+        MainNavigation(navigationService = navigationService, navController = navController, isOnBoarded = isOnBoarded)
+
         if (showDialog.value) {
           val theTitle = "${getString(R.string.app_name)}${getString(R.string.running_mode)}"
           val theSubTitle = "v${BuildConfig.VERSION_NAME}"

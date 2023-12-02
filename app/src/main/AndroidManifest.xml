@@ -15,8 +15,9 @@
       android:supportsRtl="true"
       android:theme="@style/Theme.DemoMovieCompose"
       tools:targetApi="31">
+
     <activity
-        android:name=".MainActivity"
+        android:name=".IntroActivity"
         android:exported="true"
         android:theme="@style/Theme.DemoMovieCompose"
         android:screenOrientation="portrait">
@@ -26,6 +27,13 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <activity
+        android:name=".MainActivity"
+        android:exported="true"
+        android:theme="@style/Theme.DemoMovieCompose"
+        android:screenOrientation="portrait"/>
+
   </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.dpfht.demomoviecompose.framework.navigation
 
 sealed class Screen(val route: String) {
+  object IntroBaseRoute: Screen("intro")
   object MainBaseRoute: Screen("main")
 
   object None: Screen("")
@@ -8,6 +9,7 @@ sealed class Screen(val route: String) {
   data class NavigateBackWithResult(val data: Map<String, Any>?): Screen("navigateBackWithResult")
 
   object Splash: Screen("splash")
+  object Home: Screen("home")
   object PopularMovies: Screen("popular_movies")
   object SearchMovie: Screen("search_movie")
   object FavoriteMovies: Screen("favorite_movies")
