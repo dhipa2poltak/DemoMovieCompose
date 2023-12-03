@@ -58,6 +58,7 @@ fun MainNavigation(navigationService: NavigationService, navController: NavHostC
         navController.navigateUp()
         navigationService.navigate(None)
       }
+      Screen.Home -> {}
       Screen.PopularMovies -> {
         navController.navigate(Screen.PopularMovies.route) {
           popUpTo(navController.graph.findStartDestination().id) {
