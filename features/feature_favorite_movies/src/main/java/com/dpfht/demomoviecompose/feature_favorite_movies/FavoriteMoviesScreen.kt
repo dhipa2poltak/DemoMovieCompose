@@ -40,6 +40,7 @@ fun FavoriteMoviesScreen(
   screenTitle: String,
   onClickAboutMenuItem: () -> Unit,
   savedStateHandle: SavedStateHandle,
+  accessTime: Long,
   viewModel: FavoriteMoviesViewModel = hiltViewModel()
 ) {
   val coroutineScope = rememberCoroutineScope()
@@ -48,13 +49,13 @@ fun FavoriteMoviesScreen(
 
   val movieId = savedStateHandle.get<Int>("movieId")
   val isFavorite = savedStateHandle.get<Boolean>("isFavorite")
-  if (movieId != null && isFavorite == false) {
+  if (movieId != null && isFavorite == false && itemState.firstOrNull { it.favEntity.movieId == movieId } != null) {
     LaunchedEffect(movieId) {
       viewModel.onEvent(UIEvent.OnDeleteMovieItem(movieId))
     }
   } else {
-    LaunchedEffect(Unit) {
-      viewModel.onEvent(UIEvent.Init)
+    LaunchedEffect(accessTime) {
+      viewModel.onEvent(UIEvent.Init(accessTime))
     }
   }
 

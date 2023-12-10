@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dpfht.demomoviecompose.framework.R
 import com.dpfht.demomoviecompose.framework.navigation.Screen
+import java.util.Calendar
 
 @Composable
 fun AppDrawerContent(
@@ -67,7 +68,7 @@ fun AppDrawerContent(
           label = stringResource(id = R.string.framework_text_favorite_movies),
           isSelected = currentScreen == Screen.FavoriteMovies.route,
           onClick = {
-            onScreenSelected.invoke(Screen.FavoriteMovies)
+            onScreenSelected.invoke(Screen.FavoriteMovies(Calendar.getInstance().timeInMillis))
           }
         )
       }

@@ -12,7 +12,13 @@ sealed class Screen(val route: String) {
   object Home: Screen("home")
   object PopularMovies: Screen("popular_movies")
   object SearchMovie: Screen("search_movie")
-  object FavoriteMovies: Screen("favorite_movies")
+  data class FavoriteMovies(val accessTime: Long): Screen("favorite_movies") {
+    companion object {
+      const val route = "favorite_movies/{accessTime}"
+    }
+
+    fun createRoute() = "favorite_movies/$accessTime"
+  }
   data class MovieDetails(val movieId: Int, val isForResult: Boolean) : Screen("") {
     companion object {
       const val route = "movie_details/{movieId}/{isForResult}"

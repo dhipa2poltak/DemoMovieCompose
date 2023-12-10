@@ -74,7 +74,7 @@ fun MainNavigation(navigationService: NavigationService, navController: NavHostC
         showSheet = true
         navigationService.navigate(None)
       }
-      is Screen.SearchMovie -> {
+      Screen.SearchMovie -> {
         navController.navigate(Screen.SearchMovie.route) {
           popUpTo(navController.graph.findStartDestination().id) {
             saveState = true
@@ -85,13 +85,14 @@ fun MainNavigation(navigationService: NavigationService, navController: NavHostC
         }
       }
       is Screen.FavoriteMovies -> {
-        navController.navigate(Screen.FavoriteMovies.route) {
+        navController.navigate(screen.createRoute()) {
           popUpTo(navController.graph.findStartDestination().id) {
             saveState = true
           }
 
           launchSingleTop = true
         }
+        navigationService.navigate(None)
       }
       is Screen.MovieDetails -> {
         navController.navigate(screen.createRoute())
@@ -114,9 +115,25 @@ fun NavGraphBuilder.mainGraph(appWindowTitle: String, drawerState: DrawerState, 
     composable(route = Screen.SearchMovie.route) {
       SearchMovieScreen(drawerState = drawerState, screenTitle = appWindowTitle, onClickAboutMenuItem = onClickAboutMenuItem)
     }
-    composable(route = Screen.FavoriteMovies.route) {
-      val savedStateHandle = it.savedStateHandle
-      FavoriteMoviesScreen(drawerState = drawerState, screenTitle = appWindowTitle, onClickAboutMenuItem = onClickAboutMenuItem, savedStateHandle = savedStateHandle)
+    composable(route = Screen.FavoriteMovies.route) { backStackEntry ->
+      val accessTime = backStackEntry.arguments?.getString("accessTime")
+      requireNotNull(accessTime) { stringResource(id = string.app_text_access_time_required) }
+
+      val theAccessTime = try {
+        accessTime.toLong()
+      } catch (e: Exception) {
+        e.printStackTrace()
+        -1
+      }
+
+      val savedStateHandle = backStackEntry.savedStateHandle
+      FavoriteMoviesScreen(
+        drawerState = drawerState,
+        screenTitle = appWindowTitle,
+        onClickAboutMenuItem = onClickAboutMenuItem,
+        savedStateHandle = savedStateHandle,
+        accessTime = theAccessTime
+      )
     }
     composable(route = Screen.MovieDetails.route) { backStackEntry ->
       val movieId = backStackEntry.arguments?.getString("movieId")

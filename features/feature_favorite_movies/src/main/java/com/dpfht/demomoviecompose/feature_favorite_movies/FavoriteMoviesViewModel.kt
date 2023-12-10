@@ -37,8 +37,12 @@ class FavoriteMoviesViewModel @Inject constructor(
 
   fun onEvent(event: UIEvent) {
     when (event) {
-      UIEvent.Init -> {
-        start()
+      is UIEvent.Init -> {
+        if (_uiState.value.accessTime != event.accessTime) {
+          _itemsState.clear()
+          _uiState.value = _uiState.value.copy(accessTime = event.accessTime, isLoaded = false, isLoading = false, errorMessage = "")
+          start()
+        }
       }
       is UIEvent.FetchMovieDetails -> {
         fetchMovieDetails(event.favModel)
@@ -110,10 +114,10 @@ class FavoriteMoviesViewModel @Inject constructor(
   }
 
   private fun deleteFavoriteMovie(movieId: Int) {
-    _uiState.value = _uiState.value.copy(isLoading = true)
-
-    val favMovie = _itemsState.first { it.favEntity.movieId == movieId }
+    val favMovie = _itemsState.firstOrNull { it.favEntity.movieId == movieId } ?: return
     val movieEntity = favMovie.movieEntity
+
+    _uiState.value = _uiState.value.copy(isLoading = true)
 
     movieEntity?.let {
       viewModelScope.launch {
