@@ -1,12 +1,21 @@
 package com.dpfht.demomoviecompose.framework.commons.ui.components
 
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -20,8 +29,6 @@ fun CustomTextField(
   onTextChange: (String) -> Unit,
   isError: Boolean = false
 ) {
-  val focusManager = LocalFocusManager.current
-
   OutlinedTextField(
     value = textState,
     onValueChange = { onTextChange(it) },
@@ -29,16 +36,38 @@ fun CustomTextField(
     label = {
       Text(title)
     },
-    modifier = modifier.padding(10.dp),
+    modifier = modifier
+      .padding(10.dp)
+      .clearFocusOnKeyboardDismiss(),
     keyboardOptions = KeyboardOptions(
       keyboardType = KeyboardType.Text,
       imeAction = ImeAction.Done
     ),
-    keyboardActions = KeyboardActions(
-      onDone = {
-        focusManager.clearFocus()
-      }
-    ),
     isError = isError
   )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
+  var isFocused by remember { mutableStateOf(false) }
+  var keyboardAppearedSinceLastFocused by remember { mutableStateOf(false) }
+  if (isFocused) {
+    val imeIsVisible = WindowInsets.isImeVisible
+    val focusManager = LocalFocusManager.current
+    LaunchedEffect(imeIsVisible) {
+      if (imeIsVisible) {
+        keyboardAppearedSinceLastFocused = true
+      } else if (keyboardAppearedSinceLastFocused) {
+        focusManager.clearFocus()
+      }
+    }
+  }
+  onFocusEvent {
+    if (isFocused != it.isFocused) {
+      isFocused = it.isFocused
+      if (isFocused) {
+        keyboardAppearedSinceLastFocused = false
+      }
+    }
+  }
 }
