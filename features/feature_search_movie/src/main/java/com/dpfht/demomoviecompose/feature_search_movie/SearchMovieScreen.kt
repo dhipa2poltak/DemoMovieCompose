@@ -83,7 +83,7 @@ fun SearchMovieScreen(
       ) {
         ConstraintLayout(
           modifier = modifier
-            .padding(padding)
+            .padding(top = 58.dp)
             .fillMaxSize()
         ) {
 
